@@ -35,7 +35,8 @@ class Catalog extends React.Component {
                      return <ListItems 
                       key={i.filmId} 
                       movie={i}
-					  onShowFilmInfo={this.props.onShowFilmInfo}/>
+					  onShowFilmInfo={this.props.onShowFilmInfo}
+					  />
                     })}
 					
 				</List>

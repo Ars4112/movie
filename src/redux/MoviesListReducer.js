@@ -1,11 +1,11 @@
 const MOVIES_LIST = "MOVIES_LIST";
 const SHOW_FILM_INFO = "SHOW_FILM_INFO";
-const GET_ID = "GET_ID";
+const GET_STAFF = "GET_STAFF";
 
 const initionalState = {
     setMoviesList: [],
-    filmInfo: null,
-    getId: []
+    filmInfo: {},
+    getStaff: []
 }
 
 const MuviesListReducer = (state = initionalState, action)=> {
@@ -18,12 +18,12 @@ const MuviesListReducer = (state = initionalState, action)=> {
             case SHOW_FILM_INFO:
             return {
                 ...state,
-                filmInfo: [...action.info]
+                filmInfo: {...action.info}
             };
-            case GET_ID:
+            case GET_STAFF:
                 return {
                     ...state,
-                    getId: action.id
+                    getStaff: action.staff
                 }
         default:
             return state;
@@ -40,9 +40,9 @@ export const showFilmInfoAC = (info)=> ({
     info
 })
 
-export const getIdAC = (id)=> ({
-    type: GET_ID,
-    id
+export const getStaffAC = (staff)=> ({
+    type: GET_STAFF,
+    staff
 })
 
 export default MuviesListReducer;

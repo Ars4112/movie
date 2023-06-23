@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import App from "../App";
 
+
 class AppAPIComponent extends React.Component {
 	render() {
 		return (
 			<>
-            <App getId={this.props.getId}/>
+            <App/>
             </>
 		);
 	}

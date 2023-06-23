@@ -2,8 +2,9 @@ import Header from "./components/Header";
 import CatalogContainer from "./components/CatalogContainer";
 import Global from "./components/Global";
 import styled from "styled-components";
-import { Routes, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import MovieInfoContainer from "./components/MovieInfoContainer";
+// import getId from "./components/MovieInfoContainer"
 
 const Container = styled.div`
 	min-height: 100vh;
@@ -11,7 +12,6 @@ const Container = styled.div`
 	width: auto;
 	display: flex;
 	flex-direction: column;
-
 	background-color: gray;
 `;
 
@@ -20,10 +20,14 @@ function App(props) {
 		<>
 			<Container>
 				<Header />
-				<Routes>
-					<Route index element={<CatalogContainer />} />
-					<Route path={`/film/${props.getId}`} element={<MovieInfoContainer />} />
-				</Routes>
+				<Switch>
+					<Route path="/film/:id">
+						<MovieInfoContainer />
+					</Route>
+					<Route index>
+						<CatalogContainer />
+					</Route>
+				</Switch>
 			</Container>
 			<Global />
 		</>

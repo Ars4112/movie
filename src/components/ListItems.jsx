@@ -31,13 +31,10 @@ const Link = styled(NavLink)`
 `;
 
 class ListItems extends React.Component {
-	getId = () => {
-		this.props.onShowFilmInfo(this.props.movie.filmId);
-	};
 	render() {
 		return (
 			<>
-				<Link to={`/film/${this.props.movie.filmId}`}onClick={this.getId}>
+				<Link to={`/film/${this.props.movie.filmId}`}>
 					<Item>
 						<Img src={this.props.movie.posterUrl} width={300} height={450} />
 						<H3>{this.props.movie.nameRu}</H3>

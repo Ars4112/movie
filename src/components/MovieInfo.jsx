@@ -1,6 +1,9 @@
 import React from "react";
 import { Container } from "./Catalog";
 import styled from "styled-components";
+import SliderSimilarFilm from "./SliderSimilarFilm";
+// import PersonContainer from "./PersonContainer";
+import Actor from "./Actor";
 
 const GridContainer = styled.div`
 	display: grid;
@@ -19,7 +22,8 @@ const GridContainer = styled.div`
 const Img = styled.img`
 	object-fit: cover;
 	display: block;
-	/* width: 100%; */
+	width: 200px;
+	height: 300px;
 	grid-area: B;
 `;
 
@@ -31,30 +35,31 @@ const Title = styled.h2`
 	margin: 0;
 	font-family: Helvetica, sans-serif;
 	grid-area: A;
-	/* background-color: aliceblue; */
 	@media (max-width: 768px) {
 		font-size: 15px;
-		/* background-color: #5caef5; */
 	}
+`;
+
+const SubTitle = styled.h3`
+	margin: 0;
 `;
 
 const ActorsList = styled.ul`
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	/* background-color: aliceblue; */
-	/* width: 100%; */
 	grid-area: C;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 `;
 const Grage = styled.div`
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 22px;
 	letter-spacing: -0.5px;
-
 	font-family: Helvetica, sans-serif;
 	grid-area: F;
-	/* background-color: aliceblue; */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -64,7 +69,9 @@ const About = styled.ul`
 	margin: 0;
 	padding: 0;
 	grid-area: D;
-	/* background-color: aliceblue; */
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 `;
 
 const AboutItem = styled.li`
@@ -75,41 +82,22 @@ const AboutItem = styled.li`
 `;
 
 class MovieInfo extends React.Component {
-	// constructor(props) {
-	// 	super(props)
-	// 	this.getStaff = this.props.getStaff;
-	// 	this.filmInfo = this.props.filmInfo;
-	// 	// this.arrayActors = this.arrayActors.bind(this)
-	// }
+	arrayStaff = (e) =>
+		e === "ACTOR"
+			? this.props.getStaff
+					.filter((i) => i.professionKey === e)
+					.map((i) => <Actor key={i.staffId} getStaff={i} />)
+			: this.props.getStaff
+					.filter((i) => i.professionKey === e)
+					.map((i) => (i.nameRu === "" ? i.nameEn : i.nameRu))
+					.slice(0, 3)
+					.join(", ");
 
-	arrayActors = () => {
-		return this.props.getStaff
-			.filter((i) => i.professionKey === "ACTOR")
-			.map((i) => {
-				return (
-					<li key={i.staffId}>
-						<span>{i.nameRu === "" ? i.nameEn : i.nameRu}</span>
-					</li>
-				);
-			});
-	};
-
-	arrayProduser = () => {
-		return this.props.getStaff
-			.filter((i) => i.professionKey === "PRODUCER")
-			.map((i) => (i.nameRu === "" ? i.nameEn : i.nameRu))
-			.join(", ");
-	};
-
-	arrayDirector = ()=> this.props.getStaff.filter((i) => i.professionKey === "DIRECTOR").map((i) => (i.nameRu === "" ? i.nameEn : i.nameRu))
-	.join(", ");
-
-	arrayCountry = ()=> this.props.filmInfo.countries.map((i) => i.country).join(", ");
+	arrayCountry = () =>
+		this.props.filmInfo.countries.map((i) => i.country).join(", ");
 
 	render() {
-		console.log(
-			this.props.getStaff.filter((i) => i.professionKey === "DIRECTOR")
-		);
+		// console.log(this.props.getStaff);
 		console.log(this.props.filmInfo);
 		return (
 			<Container>
@@ -122,42 +110,65 @@ class MovieInfo extends React.Component {
 					<Title>{`${this.props.filmInfo.nameRu} (${this.props.filmInfo.year})`}</Title>
 					<Grage>{this.props.filmInfo.ratingKinopoisk}</Grage>
 					<ActorsList>
-						{this.arrayActors()}
-						{this.arrayActors().length}
+						{this.arrayStaff("ACTOR").slice(0, 10)}
+						{this.arrayStaff("ACTOR").length}
 					</ActorsList>
-					
+
 					<About>
-						<h3>О фильме</h3>
+						<SubTitle>О фильме</SubTitle>
 						<AboutItem>
 							<span>Год производства</span>
 							<span>{this.props.filmInfo.year}</span>
 						</AboutItem>
 						<AboutItem>
 							<span>Страна</span>
-							<span>
-								{this.arrayCountry()}
-							</span>
+							<span>{this.arrayCountry()}</span>
 						</AboutItem>
 						<AboutItem>
 							<span>Жанр</span>
-							 <span>{this.props.filmInfo.genres.genre}</span> 
-						</AboutItem>
-						<AboutItem>
-							<span>Режиссер</span>
 							<span>
-								{this.arrayDirector()}
+								{this.props.filmInfo.genres.map((i) => i.genre).join(", ")}
 							</span>
 						</AboutItem>
+						{this.props.filmInfo.shortDescription
+
+ === null ? null : 
 						<AboutItem>
-							<span>продюсеры</span>
-							<span>{this.arrayProduser()}</span>
+							<span>Краткое содержание</span>
+							<span>
+								{this.props.filmInfo.shortDescription
+
+}
+							</span>
+						</AboutItem>}
+						<AboutItem>
+							<span>Режиссер</span>
+							<span>{this.arrayStaff("DIRECTOR")}</span>
 						</AboutItem>
 						<AboutItem>
-							<span>продюсеры</span>
-							<span>{this.arrayProduser()}</span>
+							<span>Продюсер</span>
+							<span>{this.arrayStaff("PRODUCER")}</span>
+						</AboutItem>
+						<AboutItem>
+							<span>Монтаж</span>
+							<span>{this.arrayStaff("EDITOR")}</span>
+						</AboutItem>
+						<AboutItem>
+							<span>Художник</span>
+							<span>{this.arrayStaff("DESIGN")}</span>
+						</AboutItem>
+						<AboutItem>
+							<span>Композитор</span>
+							<span>{this.arrayStaff("COMPOSER")}</span>
+						</AboutItem>
+						<AboutItem>
+							<span>Сценарий</span>
+							<span>{this.arrayStaff("WRITER")}</span>
 						</AboutItem>
 					</About>
 				</GridContainer>
+				{this.props.similarFilm.items && <SliderSimilarFilm similarFilm={this.props.similarFilm}/>}
+				
 			</Container>
 		);
 	}

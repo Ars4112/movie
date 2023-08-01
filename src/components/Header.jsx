@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import SearchComponent from "./SearchContainer";
 
 const Sds = styled.h1`
 	margin: 0;
@@ -16,10 +17,7 @@ const Container = styled.div`
 	align-items: center;
 `;
 
-const Search = styled.input`
-	padding: 8px;
-	border-radius: 5px;
-`;
+ 
 
 const Link = styled(NavLink)`
 	text-decoration: none;
@@ -32,7 +30,7 @@ class Header extends React.Component {
 				<Link to="/">
 					<Sds>MOVIE</Sds>
 				</Link>
-				<Search placeholder="поиск" />
+				<SearchComponent />
 			</Container>
 		);
 	}

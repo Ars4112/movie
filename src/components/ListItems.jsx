@@ -5,15 +5,25 @@ import styled from "styled-components";
 const Item = styled.li`
 	margin: 0;
 	padding: 0;
-	background-color: brown;
+	
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+	aspect-ratio: 200/300;
 `;
 const Img = styled.img`
 	object-fit: cover;
-	height: 450px;
-	aspect-ratio: auto;
+	height: 238px;
+	position: relative;
+	&::before {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		opacity: 0.3;
+	}
 `;
 
 const H3 = styled.h3`

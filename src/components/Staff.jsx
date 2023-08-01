@@ -1,13 +1,11 @@
-import styled from "styled-components";
+// import styled from "styled-components";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 import React, { useState } from "react";
 import PersonContainer from "./PersonContainer";
 
-const Item = styled.li`
-	/* position: relative; */
-`;
 
-const Actor = (props) => {
+
+const Staff = (props) => {
 	const [tooltipStaff, setTooltipStaff] = useState(false);
 	const [position, setPosition] = useState(
 		{
@@ -17,6 +15,7 @@ const Actor = (props) => {
 	)
 	
 	const showStaff = (event) => {
+		
 		setTooltipStaff(true);
 		setPosition(
 			{
@@ -30,7 +29,7 @@ const Actor = (props) => {
 	const hideStaff = () => setTooltipStaff(false);
 	return (
 		<>
-			<Item>
+			
 				<NavLink
 					to={`staff/${props.getStaff.staffId}`}
 					onMouseOver={showStaff}
@@ -48,10 +47,11 @@ const Actor = (props) => {
 							? props.getStaff.nameEn
 							: props.getStaff.nameRu}
 					</span>
+					{props.hasComma && ", "}
 				</NavLink>
-			</Item>
+			
 		</>
 	);
 };
 
-export default Actor;
+export default Staff;

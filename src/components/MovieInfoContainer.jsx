@@ -23,7 +23,6 @@ class MovieInfoComponent extends React.Component {
 		})
 			.then((res) => res.json())
 			.then((json) => {
-				console.log(11111);
 				return this.props.getShowFilmInfo(json);
 			})
 			.catch((err) => console.log(err));
@@ -38,7 +37,6 @@ class MovieInfoComponent extends React.Component {
 		})
 			.then((res) => res.json())
 			.then((json) => {
-				console.log(22222);
 				return this.props.getStaffAC(json);
 			})
 			.catch((err) => console.log(err));
@@ -53,19 +51,18 @@ class MovieInfoComponent extends React.Component {
 		})
 			.then((res) => res.json())
 			.then((json) => {
-				console.log(33333);
 				return this.props.showSimilarFilm(json);
 			})
 			.catch((err) => console.log(err));
 	}
 	render() {
-		console.log(44444);
 		if (this.props.getStaff.length && this.props.filmInfo) {
 			return (
 				<MovieInfo
 					filmInfo={this.props.filmInfo}
 					getStaff={this.props.getStaff}
 					similarFilm={this.props.similarFilm}
+					
 				/>
 			);
 		} else {
@@ -79,6 +76,7 @@ const mapStateToProps = (state) => {
 		getStaff: state.moviesList.getStaff,
 		filmInfo: state.moviesList.filmInfo,
 		similarFilm: state.moviesList.similarFilm,
+		
 	};
 };
 

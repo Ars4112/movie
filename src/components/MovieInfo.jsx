@@ -3,7 +3,7 @@ import { Container } from "./Catalog";
 import styled from "styled-components";
 import SliderSimilarFilm from "./SliderSimilarFilm";
 // import PersonContainer from "./PersonContainer";
-import Actor from "./Actor";
+import Staff from "./Staff";
 
 const GridContainer = styled.div`
 	display: grid;
@@ -17,6 +17,15 @@ const GridContainer = styled.div`
 		"B  D D D C C C ";
 	gap: 20px;
 	width: 100%;
+	@media (max-width: 768px) {
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-areas:
+		" A F "
+		" B B "
+		" D D "
+		" D D "
+		" C C ";
+	}
 `;
 
 const Img = styled.img`
@@ -25,6 +34,18 @@ const Img = styled.img`
 	width: 200px;
 	height: 300px;
 	grid-area: B;
+
+	@media (max-width: 768px) {
+		width: 60%;
+		height: auto;
+		margin: 0 auto;
+	}
+
+	@media (max-width: 640px) {
+		width: 100%;
+		aspect-ratio: 200/300;
+		
+	}
 `;
 
 const Title = styled.h2`
@@ -36,7 +57,7 @@ const Title = styled.h2`
 	font-family: Helvetica, sans-serif;
 	grid-area: A;
 	@media (max-width: 768px) {
-		font-size: 15px;
+		font-size: 25px;
 	}
 `;
 
@@ -53,6 +74,7 @@ const ActorsList = styled.ul`
 	flex-direction: column;
 	gap: 5px;
 `;
+
 const Grage = styled.div`
 	font-size: 20px;
 	font-weight: 700;
@@ -63,6 +85,10 @@ const Grage = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+
+	@media (max-width: 768px) {
+		justify-content: end;
+	}
 `;
 const About = styled.ul`
 	list-style: none;
@@ -72,6 +98,8 @@ const About = styled.ul`
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
+
+	
 `;
 
 const AboutItem = styled.li`
@@ -79,6 +107,16 @@ const AboutItem = styled.li`
 	grid-template-columns: 170px auto;
 	grid-auto-rows: min-content;
 	gap: 20px;
+
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr 2fr;
+	}
+`;
+
+const StaffList = styled.div`
+	
+	
+	
 `;
 
 class MovieInfo extends React.Component {
@@ -86,19 +124,19 @@ class MovieInfo extends React.Component {
 		e === "ACTOR"
 			? this.props.getStaff
 					.filter((i) => i.professionKey === e)
-					.map((i) => <Actor key={i.staffId} getStaff={i} />)
+					.map((i) => <Staff key={i.staffId} getStaff={i} />)
 			: this.props.getStaff
-					.filter((i) => i.professionKey === e)
-					.map((i) => (i.nameRu === "" ? i.nameEn : i.nameRu))
-					.slice(0, 3)
-					.join(", ");
-
+					.filter((i) => i.professionKey === e).slice(0, 3)
+					.map((i, index, arr) => <Staff key={i.staffId} getStaff={i} hasComma={arr.length-1 !== index}/>);
+	
+	
 	arrayCountry = () =>
 		this.props.filmInfo.countries.map((i) => i.country).join(", ");
 
 	render() {
+		// console.log("getStaff" ,this.props.getStaff);
 		// console.log(this.props.getStaff);
-		console.log(this.props.filmInfo);
+		// console.log(this.props.filmInfo);
 		return (
 			<Container>
 				<GridContainer>
@@ -130,45 +168,41 @@ class MovieInfo extends React.Component {
 								{this.props.filmInfo.genres.map((i) => i.genre).join(", ")}
 							</span>
 						</AboutItem>
-						{this.props.filmInfo.shortDescription
-
- === null ? null : 
-						<AboutItem>
-							<span>Краткое содержание</span>
-							<span>
-								{this.props.filmInfo.shortDescription
-
-}
-							</span>
-						</AboutItem>}
+						{this.props.filmInfo.shortDescription === null ? null : (
+							<AboutItem>
+								<span>Краткое содержание</span>
+								<span>{this.props.filmInfo.shortDescription}</span>
+							</AboutItem>
+						)}
 						<AboutItem>
 							<span>Режиссер</span>
-							<span>{this.arrayStaff("DIRECTOR")}</span>
+							<StaffList>{this.arrayStaff("DIRECTOR")}</StaffList>
 						</AboutItem>
 						<AboutItem>
 							<span>Продюсер</span>
-							<span>{this.arrayStaff("PRODUCER")}</span>
+							<StaffList>{this.arrayStaff("PRODUCER")}</StaffList>
 						</AboutItem>
 						<AboutItem>
 							<span>Монтаж</span>
-							<span>{this.arrayStaff("EDITOR")}</span>
+							<StaffList>{this.arrayStaff("EDITOR")}</StaffList>
 						</AboutItem>
 						<AboutItem>
 							<span>Художник</span>
-							<span>{this.arrayStaff("DESIGN")}</span>
+							<StaffList>{this.arrayStaff("DESIGN")}</StaffList>
 						</AboutItem>
 						<AboutItem>
 							<span>Композитор</span>
-							<span>{this.arrayStaff("COMPOSER")}</span>
+							<StaffList>{this.arrayStaff("COMPOSER")}</StaffList>
 						</AboutItem>
 						<AboutItem>
 							<span>Сценарий</span>
-							<span>{this.arrayStaff("WRITER")}</span>
+							<StaffList>{this.arrayStaff("WRITER")}</StaffList>
 						</AboutItem>
 					</About>
 				</GridContainer>
-				{this.props.similarFilm.items && <SliderSimilarFilm similarFilm={this.props.similarFilm}/>}
-				
+				{this.props.similarFilm.items && (
+					<SliderSimilarFilm similarFilm={this.props.similarFilm}/>
+				)}
 			</Container>
 		);
 	}

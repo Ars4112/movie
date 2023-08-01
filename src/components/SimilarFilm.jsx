@@ -1,22 +1,22 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import React from "react";
 
-const Container = styled.div`
-	margin: 0 10px;
-	height: auto;
-	img {
-		object-fit: cover;
-		height: 100%;
-	}
+import styled from "styled-components";
+
+const Img = styled.img`
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 `;
 
 const SimilarFilm = (props) => {
+	const onHandle = (e) => {
+		e.preventDefault();
+	};
 	return (
-		<Link to={`/film/${props.id}`}>
-			<Container>
-				<img src={props.img} alt="#" />
-			</Container>
-		</Link>
+		<a href={`/film/${props.id}/similars`} onMouseDown={onHandle}>
+			<Img src={props.img} alt="#" />
+		</a>
 	);
 };
 

@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import ListItems from "./ListItems";
 
-
-
 export const Container = styled.div`
 	max-width: 1360px;
 	width: 100%;
@@ -19,7 +17,7 @@ const List = styled.ul`
 	width: 100%;
 	height: 100%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+	grid-template-columns: repeat(auto-fit, 200px);
 	grid-auto-rows: auto;
 	gap: 30px;
 	justify-content: center;
@@ -30,15 +28,9 @@ class Catalog extends React.Component {
 		return (
 			<Container>
 				<List>
-					
-					{this.props.setMoviesList.map((i)=> {
-                     return <ListItems 
-                      key={i.filmId} 
-                      movie={i}
-					  onShowFilmInfo={this.props.onShowFilmInfo}
-					  />
-                    })}
-					
+					{this.props.setMoviesList.map((i) => {
+						return <ListItems key={i.filmId} movie={i} />;
+					})}
 				</List>
 			</Container>
 		);

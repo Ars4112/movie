@@ -26,6 +26,9 @@ function App(props) {
 				{/* <Route path={`staff/:id`}>
 					<PersonContainer />
 				</Route> */}
+					<Route path="/film/:id/similars">
+						<MovieInfoContainer />
+					</Route>
 					<Route path="/film/:id">
 						<MovieInfoContainer />
 					</Route>
